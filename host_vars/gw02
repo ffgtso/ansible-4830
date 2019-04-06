@@ -9,16 +9,16 @@ ffgt_nat_ip: 192.251.226.211/32
 ffgt_tun:
 - name: ham02
   gre_target: 213.128.133.185
-  v4_local: 10.234.11.155/32
-  v4_remote: 10.234.11.185/32
-  v6_local: 2a06:e881:1705:b9::1/64
-  v6_remote: 2a06:e881:1705:b9::2/64
+  v4_local: 10.234.11.185/32
+  v4_remote: 10.234.11.155/32
+  v6_local: 2a06:e881:1705:b9::2/64
+  v6_remote: 2a06:e881:1705:b9::1/64
 - name: ber01
   gre_target: 217.197.83.189
-  v4_local: 10.234.11.123/32
-  v4_remote: 10.234.11.183/32
-  v6_local: 2a06:e881:1705:b7::1/64
-  v6_remote: 2a06:e881:1705:b7::2/64
+  v4_local: 10.234.11.183/32
+  v4_remote: 10.234.11.123/32
+  v6_local: 2a06:e881:1705:b7::2/64
+  v6_remote: 2a06:e881:1705:b7::1/64
 
 domaenenliste:
    "01":

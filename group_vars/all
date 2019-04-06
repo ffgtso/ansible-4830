@@ -49,7 +49,7 @@ ff_network:
   # IPv4 Adressraum
   v4_network: 10.88.0.0/16
   # IPv6 adressraum
-  v6_network: 2001:bf7:131c::/44
+  v6_network: 2001:bf7:131c::/48
 
 hostname_suffix: ".freifunk-owl.de"
 
