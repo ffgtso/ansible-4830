@@ -1,4 +1,4 @@
-server_besitzer: "Sven Culley / Sense"
+server_besitzer: "Freifunk OWL"
 vm_id: 12
 server_id: 12
 
@@ -6,39 +6,44 @@ indexconfig:
   links:
    - name: "{{freifunk.name}}"
      link: "https://{{freifunk.domain}}"
-   - name: "{{freifunk.name}} - Wiki"
-     link: "https://wiki.{{freifunk.domain}}"
    - name: "{{freifunk.name}} - Forum"
      link: "https://forum.{{freifunk.domain}}"
-   - name: "{{freifunk.name}} - Firmware Assistent"
-     link: "https://firmware.{{freifunk.domain}}/md-fw-dl"
-  linktofwdownloader: "https://{{freifunk.domain}}/md-fw-dl/?region=domaene"  #Nummer der Domäne wird automatisch am Ende angefügt.
+   - name: "{{freifunk.name}} - Firmware Wizard"
+     link: "https://firmware-wizard.{{freifunk.domain}}/"
 
 mapconfig:
   hopglassServer:
     purge:
       max_age: 120 #Wie lang in Tagen soll ein Knoten noch auf der Karte angezeigt werden wenn dieser Offline ist.
-  globalInfos:
-   - name: "Status-Monitor"
-     href: "https://grafana.{{freifunk.domain}}/d/000000033/test-alert-dashboard?refresh=30s&orgId=1"
-     thumbnail: "https://grafana.{{freifunk.domain}}/render/d-solo/000000033/test-alert-dashboard?theme=light&panelId=5&width=520&height=370"
+  globalInfos: 
+    - name: "Wochenstatistik"
+      iframe: "https://graphite-stats.freifunk-lippe.de/render/?width=586&height=308&_salt=1448625535.659&title=Gesamtzahl%20Benutzer%20(1%20Woche)&areaMode=first&target=sumSeries(node.*.clients_online.total)&lineMode=staircase&from=-1weeks&fontName=Times&colorList=green&vtitle=Gesamtzahl%20Benutzer%20(1%20Woche)&hideLegend=true"
+      caption: "Bild mit Wochenstatistik"
+    - name: "Monatsstatistik"
+      iframe: "https://graphite-stats.freifunk-lippe.de/render/?width=586&height=308&_salt=1448625625.395&title=Gesamtzahl%20Benutzer%20(30%20Tage)&areaMode=first&target=sumSeries(node.*.clients_online.total)&lineMode=staircase&from=-30days&fontName=Times&colorList=green&vtitle=Gesamtzahl%20Benutzer%20(30%20Tage)&hideLegend=true"
+      caption: "Bild mit Monatsstatistik"
+
   nodeInfos:
-   - name: "Clientstatistik"
-     href: "https://grafana.{{freifunk.domain}}/d/000000021/advanced-node-stats?refresh=30s&orgId=1&var-node={NODE_ID}"
-     thumbnail: "https://grafana.{{freifunk.domain}}/render/d-solo/000000021/advanced-node-stats?var-node={NODE_ID}&panelId=1&theme=light&from=now-24h&to=now&width=520&height=370"
+   - name: "Benutzer (1 Tag)"
+     iframe: "https://graphite-stats.freifunk-owl.de/render/?width=586&height=308&_salt=1448447649.896&from=-24hours&target=node.{NODE_ID}.clients_online.total&areaAlpha=&fontName=Times&lineWidth=1&hideAxes=false&hideYAxis=false&hideGrid=false&bgcolor=FFFFFF&colorList=green&hideLegend=true&uniqueLegend=true&graphOnly=false&title=Benutzer&drawNullAsZero=false&areaMode=first&lineMode=staircase&tz=Europe%2FBerlin&yUnitSystem=binary&vtitle=Cients"
      caption: "Knoten {NODE_ID}"
-   - name: "Traffic"
-     href: "https://grafana.{{freifunk.domain}}/d/000000021/advanced-node-stats?refresh=30s&orgId=1&var-node={NODE_ID}"
-     thumbnail: "https://grafana.{{freifunk.domain}}/render/d-solo/000000021/advanced-node-stats?var-node={NODE_ID}&panelId=2&theme=light&from=now-24h&to=now&width=520&height=370"
+   - name: "Benutzer (7 Tage)"
+     iframe: "https://graphite-stats.freifunk-owl.de/render/?width=586&height=308&_salt=1448447649.896&from=-1weeks&target=node.{NODE_ID}.clients_online.total&areaAlpha=&fontName=Times&lineWidth=1&hideAxes=false&hideYAxis=false&hideGrid=false&bgcolor=FFFFFF&colorList=green&hideLegend=true&uniqueLegend=true&graphOnly=false&title=Benutzer&drawNullAsZero=false&areaMode=first&lineMode=staircase&tz=Europe%2FBerlin&yUnitSystem=binary&vtitle=Cients"
+     caption: "Knoten {NODE_ID}"
+   - name: "Traffic - Down (24 Stunden)"
+     iframe: "https://graphite-stats.freifunk-owl.de/render/?width=586&height=308&_salt=1449038682.944&title=Traffic%20%28Download%20-%2024%20Stunden%29&fontName=Times&connectedLimit=&hideLegend=true&target=node.{NODE_ID}.traffic.node.rx.if_octets&from=-24hours&colorList=red&lineMode=staircase&lineWidth=2&tz=Europe%2FBerlin"
+     caption: "Knoten {NODE_ID}"
+   - name: "Traffic - Up (24 Stunden)"
+     iframe: "https://graphite-stats.freifunk-owl.de/render/?width=586&height=308&_salt=1449038682.944&title=Traffic%20%28Upload%20-%2024%20Stunden%29&fontName=Times&connectedLimit=&hideLegend=true&target=node.{NODE_ID}.traffic.node.tx.if_octets&from=-24hours&colorList=green&lineMode=staircase&lineWidth=2&tz=Europe%2FBerlin"
      caption: "Knoten {NODE_ID}"
   globalMap:
    map_scale: 1.1
-   map_show_contact: false
+   map_show_contact: true
    map_max_age: 14 #Wie lang in Tagen soll ein Knoten als Neu bzw. Verschwunden auf der Karte angezeigt werden?
    max_goto_zoom: 18
   communityMap:
    map_scale: 0.9
-   map_show_contact: false
+   map_show_contact: true
    map_max_age: 14 #Wie lang in Tagen soll ein Knoten als Neu bzw. Verschwunden auf der Karte angezeigt werden?
    max_goto_zoom: 18
   layers:
@@ -59,17 +64,17 @@ mapconfig:
 
 node_stats:
   graphite_target:
-    host: "node-stats.{{freifunk.domain}}" 
+    host: 195.128.100.197
     port: 2003
 
 nginx_tiles_cache:
   cache_locations:
     - name: openstreetmap
-      max_size: 50g
+      max_size: 5g
       path: "/opt/tiles_cache/osm/"
     - name: nrwatlas
       path: "/opt/tiles_cache/nrw/"
-      max_size: 50g
+      max_size: 5g
   upstreams:
     - name: openstreetmap_backend
       servers:
@@ -99,7 +104,7 @@ collectd:
   collect_ping: false
   collect_nginx: true
   graphite_target:
-    host: "stats.{{freifunk.domain}}"
+    host: 195.128.100.197
     port: 2003
 
 batman_version: "2017.4"

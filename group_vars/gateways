@@ -7,10 +7,10 @@ collectd:
   collect_bind: false
   collect_ping: true
   graphite_target:
-    host: "graphite.{{freifunk.domain}}"
+    host: 195.128.100.197
     port: 2003
 
-dhcp_type: "kea"
+dhcp_type: "isc-dhcp"
 
 kea:
   database:
@@ -18,7 +18,7 @@ kea:
     db_host: "127.0.0.1"
     db_name: "kea_leases"
     db_user: "kea"
-    db_pass: "{{kea_postgres_pw}}"
+    db_pass: "66516651"
   global:
     mtu: 1280
     lease_default: 86400

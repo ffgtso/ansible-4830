@@ -11,5 +11,5 @@ collectd:
   collect_bind: true
   collect_ping: false
   graphite_target:
-    host: 89.163.231.228
+    host: 195.128.100.197
     port: 2003

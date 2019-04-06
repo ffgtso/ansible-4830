@@ -1,24 +1,22 @@
-server_besitzer: "FFI"
-hoster: "IN-Berlin"
+server_id: 20
+vm_id: 20
 
-## Grafana erst zum schluss umstellen. 
-#grafana: 
-#  nginx:
-#    host_name: "grafana.{{freifunk.domain}}"
+server_besitzer: "Freifunk OWL"
+hoster: "Netcup"
 
 graphite:
   nginx:
     host_name: "{{inventory_hostname}}.{{freifunk.domain}}"
   cluster_servers:
-    - server: "graphite.{{freifunk.domain}}"
+    - server: "statistics.{{freifunk.domain}}"
       port: 80
   relay:
     method: "consistent-hashing"
   cache_instances:
     - name: "a"
     - name: "b"
-#    - name: "c"
-#    - name: "d"
+    - name: "c"
+    - name: "d"
   storage_schemas:
     - name: "node"
       pattern: "^node\\..*"
@@ -32,16 +30,3 @@ graphite:
     - name: "default"
       pattern: ".*"
       retentions: "10s:1h,1m:2d,5m:7d,15m:90d,1d:4y"
-
-collectd:
-  collect_dhcp: false
-  collect_fastd: false
-  collect_l2tp: false
-  collect_ipv4ipv6: false
-  collect_sysctl: false
-  collect_bind: false
-  collect_ping: false
-  collect_nginx: false
-  graphite_target:
-    host: "stats.{{freifunk.domain}}"
-    port: 2003

@@ -1,16 +1,13 @@
-server_besitzer: "FFI"
-hoster: "Hetzner"
+server_besitzer: "Freifunk OWL"
+hoster: "Netcup"
 
 grafana:
   nginx:
-    host_name: "grafana.{{freifunk.domain}}"
+    host_name: "grafana-stats.{{freifunk.domain}}"
 
 graphite:
   nginx:
-    host_name: "graphite.{{freifunk.domain}}"
-  cluster_servers:
-    - server: "graphite-node-01.freifunk-muensterland.de"
-      port: 80
+    host_name: "graphite-stats.{{freifunk.domain}}"
   relay:
     method: "consistent-hashing"
   cache_instances:
@@ -31,16 +28,3 @@ graphite:
     - name: "default"
       pattern: ".*"
       retentions: "60s:30d"
-
-collectd:
-  collect_dhcp: false
-  collect_fastd: false
-  collect_l2tp: false
-  collect_ipv4ipv6: false
-  collect_sysctl: false
-  collect_bind: false
-  collect_ping: false
-  collect_nginx: false
-  graphite_target:
-    host: "stats.{{freifunk.domain}}"
-    port: 2003
