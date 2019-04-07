@@ -78,10 +78,6 @@ filter freifunk {
     # FFGT
 	if net ~ [192.251.226.0/24+] then accept;
 	if net ~ [192.26.120.0/24+] then accept;
-	if net ~ [217.197.83.189/32] then accept;
-	if net ~ [213.128.133.185/32] then accept;
-	if net ~ [185.133.208.75/32] then accept;
-	if net ~ [94.142.240.37/32] then accept;
 {% endif %}
 
 	if net ~ [10.0.0.0/8+] then accept;
@@ -200,8 +196,8 @@ protocol bgp ffrl_{{tun.name}} from uplink {
 {% if ffgt_tun is defined %}
 {% for tun in ffgt_tun %}
 protocol bgp ffgt_{{tun.name}} from uplink {
-	source address {{ tun.v4_remote | ipaddr('address')}};
-	neighbor {{tun.v4_local | ipaddr('address')}} as 206813;
+	source address {{ tun.v4_local | ipaddr('address')}};
+	neighbor {{tun.v4_remote | ipaddr('address')}} as 206813;
 {% if "bgp_local_pref" in tun %}
 	default bgp_local_pref {{tun.bgp_local_pref}};
 {% endif %}

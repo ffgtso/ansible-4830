@@ -647,6 +647,12 @@ LoadPlugin write_graphite
 	Host "{{tun.v4_remote.split('/')[0]}}"
 {% endfor %}
 {% endif %}
+{% if "ffgt_tun" in hostvars[inventory_hostname] %}
+{% for tun in ffgt_tun %}
+# FFGT tun remote {{tun.name}}:
+	Host "{{tun.v4_remote.split('/')[0]}}"
+{% endfor %}
+{% endif %}
 #	Host "host.foo.bar"
 #	Host "host.baz.qux"
 	Interval 10.0

@@ -163,6 +163,7 @@ template bgp internal {
 {% if hostvars[host].vm_id != vm_id %}
 protocol bgp ibgp_{{host|regex_replace('-','_')}} from internal {
 {% if hostvars[host].vm_id < vm_id %}
+    # FIXME! 2a03:2260:115:ffa1:: belongs to DE-FREIFUNKMS-20150128 ...
 	neighbor 2a03:2260:115:ffa1::{{hostvars[host].vm_id}}:{{vm_id}}:1 as {{ff_network.as_number}};
 {% else %}
 	neighbor 2a03:2260:115:ffa1::{{vm_id}}:{{hostvars[host].vm_id}}:0 as {{ff_network.as_number}};
@@ -201,8 +202,8 @@ protocol bgp ffrl_{{tun.name}} from uplink {
 {% for tun in ffgt_tun %}
 protocol bgp ffgt_{{tun.name}} from uplink {
 	description "Freifunk Kreis GT";
-	source address {{ tun.v6_remote | ipaddr('address') }};
-	neighbor {{tun.v6_local | ipaddr('address')}} as 206813;
+	source address {{ tun.v6_local | ipaddr('address') }};
+	neighbor {{tun.v6_remote | ipaddr('address')}} as 206813;
 };
 
 {% endfor %}
