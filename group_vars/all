@@ -60,6 +60,7 @@ administratorenteam:
   - "jw"
   - "uhlstone"
   - "corny"
+  - "wusel"
 
 collectd:
   collect_dhcp: false
