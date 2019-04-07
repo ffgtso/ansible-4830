@@ -2,25 +2,76 @@
 build_tunnels_over_ipv6_if_available: false
 
 domaenen:
-  "01":
-    name: Lippe
-    community: Freifunk Lippe
-    ffv4_network: 10.88.0.0/20
-    ffv6_network: 2001:bf7:131c:111::/64
+  "gut":
+    name: Freifunk KreisGT (Stadt GT)
+    community: Freifunk KreisGT
+    ffv4_network: 10.234.128.0/20
+    ffv6_network: 2001:bf7:1310:128::/64
     map_scale: 1.1
-    map_show_contact: true
-    map_max_age: 30
+    map_show_contact: false
+    map_max_age: 14
     map_blinking_hours: 8
-    firmware: domaene01/
-  "02":
-    name: Detmold
-    community: Freifunk Lippe
-    ffv4_network: 10.88.16.0/20
-    ffv6_network: 2001:bf7:131c:222::/64
+    firmware: unified/
+  "gto":
+    name: Freifunk KreisGT (Südkreis)
+    community: Freifunk KreisGT
+    ffv4_network: 10.234.160.0/20
+    ffv6_network: 2001:bf7:1310:160::/64
     map_scale: 1.1
-    map_show_contact: true
-    map_max_age: 30
-    firmware: domaene02/
+    map_show_contact: false
+    map_max_age: 14
+    map_blinking_hours: 8
+    firmware: unified/
+  "gt8":
+    name: Freifunk KreisGT (Nordkreis)
+    community: Freifunk KreisGT
+    ffv4_network: 10.234.176.0/20
+    ffv6_network: 2001:bf7:1310:176::/64
+    map_scale: 1.1
+    map_show_contact: false
+    map_max_age: 14
+    map_blinking_hours: 8
+    firmware: unified/
+  "rhw":
+    name: Freifunk KreisGT (Rheda-Wiedenbrück)
+    community: Freifunk KreisGT
+    ffv4_network: 10.234.144.0/20
+    ffv6_network: 2001:bf7:1310:144::/64
+    map_scale: 1.1
+    map_show_contact: false
+    map_max_age: 14
+    map_blinking_hours: 8
+    firmware: unified/
+  "wrz":
+    name: Freifunk Müritz
+    community: Freifunk Müritz
+    ffv4_network: 10.234.192.0/21
+    ffv6_network: 2001:bf7:170:192::/64
+    map_scale: 1.1
+    map_show_contact: false
+    map_max_age: 14
+    map_blinking_hours: 8
+    firmware: unified/
+  "fsl":
+    name: Freifunk Feldberger Seenplatte
+    community: Freifunk Feldberg
+    ffv4_network: 10.234.64.0/21
+    ffv6_network: 2001:bf7:170:64::/64
+    map_scale: 1.1
+    map_show_contact: false
+    map_max_age: 14
+    map_blinking_hours: 8
+    firmware: unified/
+  "zzz":
+    name: Freifunk by 4830.org
+    community: Freifunk by 4830.org
+    ffv4_network: 10.255.128.0/20
+    ffv6_network: 2001:bf7:1310:666::/64
+    map_scale: 1.1
+    map_show_contact: false
+    map_max_age: 14
+    map_blinking_hours: 8
+    firmware: unified/
 
 # Nummer der Routing Tabelle, die auf den Servern verwendet wird
 routing_table: 42
@@ -28,12 +79,12 @@ routing_table: 42
 # Einstellungen für DHCP Server 
 dhcp_global:
   # MTU, die an die Clients im Netzwerk propagiert wird
-  mtu: 1280 
+  mtu: 1280
   # Default-Lease Time 
   lease_default: 3600
   # Maximale Lease Time
   lease_max: 10800 
-  domain_search: fflip
+  domain_search: 4830.org
 
 # Batman Einstellungen
 batman:
@@ -45,21 +96,17 @@ batman:
 # Parameter für das eigene Freifunk-Netzwerk
 ff_network:
   # Eindeutige AS-Nummer des Netzwerk
-  as_number: 64902
+  as_number: 65535
   # IPv4 Adressraum
-  v4_network: 10.88.0.0/16
+  v4_network: 10.234.0.0/15
   # IPv6 adressraum
-  v6_network: 2001:bf7:131c::/48
+  v6_network: 2001:bf7::/32
 
-hostname_suffix: ".freifunk-owl.de"
+hostname_suffix: ".4830.org"
 
 administratorenteam:
-  - "collimas"
-  - "mpw"
-  - "tronde"
-  - "jw"
-  - "uhlstone"
-  - "corny"
+  - "cord"
+  - "frosty-geek"
   - "wusel"
 
 collectd:
@@ -71,7 +118,7 @@ collectd:
   collect_bind: false
   collect_ping: false
   graphite_target:
-    host: 195.128.100.197
+    host: 193.26.120.231
     port: 2003
 
 bind:
@@ -84,22 +131,22 @@ logrotate:
   count: 3
 
 freifunk:
-  name: "Freifunk OWL"
-  kurzname: "ffowl"
-  search_domain: "ffowl"
-  email: info@freifunk-owl.de
-  domain: freifunk-owl.de
+  name: "Freifunk Kreis GT"
+  kurzname: "ffgt"
+  search_domain: "ffgt"
+  email: info@freifunk-kreisgt.de
+  domain: 4830.org
 
 bind_zonemaster:
-  server: services.freifunk-owl.de
-  email: info.freifunk-owl.de
+  server: dns-gut.4830.org
+  email: info.freifunk-kreisgt.de
 
 graphite:
   graphite_target:
-    host: 195.128.100.197
+    host: 193.26.120.231
     port: 2003
   nginx:
-    host_name: "graphite-stats.{{freifunk.domain}}"
+    host_name: "graphite.{{freifunk.domain}}"
   relay:
     method: "consistent-hashing"
   cache_instances:
@@ -127,5 +174,4 @@ nameservers:
 - "2606:4700:4700::1111"
 - "2606:4700:4700::1001"
 
-server_besitzer: "Freifunk OWL"
-
+server_besitzer: "Freifunk KreisGT"

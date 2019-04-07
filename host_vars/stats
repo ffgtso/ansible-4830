@@ -1,5 +1,5 @@
-server_besitzer: "Freifunk OWL"
-hoster: "Netcup"
+server_besitzer: "Freifunk Kreis GT"
+hoster: "4830.org"
 
 grafana:
   nginx:

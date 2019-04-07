@@ -1,8 +1,8 @@
 vm_id: 3
 server_id: 3
 
-server_besitzer: "Freifunk OWL"
-hoster: "Netcup"
+server_besitzer: "Freifunk Kreis GT"
+hoster: "4830.org"
 
 ffgt_nat_ip: 192.251.226.211/32
 

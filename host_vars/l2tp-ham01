@@ -1,10 +1,10 @@
 vm_id: 2
 server_id: 2
 
-server_besitzer: "Freifunk OWL"
-hoster: "Netcup"
+server_besitzer: "Freifunk Kreis GT"
+hoster: "4830.org"
 
-ffgt_nat_ip: 192.251.226.210/32
+ffgt_nat_ip: 192.251.226.214/32
 
 ffgt_tun:
 - name: ham02
@@ -34,9 +34,9 @@ use_wlan_slovenija_tunneldigger: true
 
 tunneldigger:
   instance_per_domain: true
-  interface: "eth0"
+  interface: "ens3"
   max_tunnels: 1024
-  port_base: 20100
+  port_base: 10000
   pmtu_discovery: false
   tunnel_timeout: 60
 

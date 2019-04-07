@@ -1,4 +1,4 @@
-server_besitzer: "Freifunk OWL"
+server_besitzer: "Freifunk Kreis GT"
 vm_id: 12
 server_id: 12
 
@@ -64,7 +64,7 @@ mapconfig:
 
 node_stats:
   graphite_target:
-    host: 195.128.100.197
+    host: 193.26.120.231
     port: 2003
 
 nginx_tiles_cache:
@@ -104,7 +104,7 @@ collectd:
   collect_ping: false
   collect_nginx: true
   graphite_target:
-    host: 195.128.100.197
+    host: 193.26.120.231
     port: 2003
 
 batman_version: "2017.4"

@@ -7,7 +7,7 @@ collectd:
   collect_bind: false
   collect_ping: true
   graphite_target:
-    host: 195.128.100.197
+    host: 193.26.120.231
     port: 2003
 
 dhcp_type: "isc-dhcp"
@@ -52,9 +52,9 @@ kea:
 
 tunneldigger:
   instance_per_domain: true
-  interface: "eth0"
+  interface: "ens3"
   max_tunnels: 1024
-  port_base: 20100
+  port_base: 10000
   pmtu_discovery: false
   tunnel_timeout: 60
 
