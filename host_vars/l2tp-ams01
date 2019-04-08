@@ -6,28 +6,39 @@ hoster: "4830.org"
 
 ffgt_nat_ip: 192.251.226.211/32
 
-ffgt_tun:
-- name: ham02
-  gre_target: 213.128.133.185
-  v4_local: 10.234.11.185/32
-  v4_remote: 10.234.11.155/32
-  v6_local: 2a06:e881:1705:b9::2/64
-  v6_remote: 2a06:e881:1705:b9::1/64
-- name: ber01
-  gre_target: 217.197.83.189
-  v4_local: 10.234.11.183/32
-  v4_remote: 10.234.11.123/32
-  v6_local: 2a06:e881:1705:b7::2/64
-  v6_remote: 2a06:e881:1705:b7::1/64
+natip_via_ospf: true
+ospf_nat_instanceid: 10
+ospf_nat_area: 10
+ospf_nat_interface: ens3
 
 domaenenliste:
-   "01":
-      dhcp_start: 10.88.8.26
-      dhcp_ende: 10.88.15.254
+   "gut":
+      dhcp_start: 10.234.128.16
+      dhcp_ende: 10.234.136.250
       server_id: 3
-   "02":
-      dhcp_start: 10.88.24.26
-      dhcp_ende: 10.88.31.254
+   "gto":
+      dhcp_start: 10.234.160.16
+      dhcp_ende: 10.234.167.250
+      server_id: 3
+   "gt8":
+      dhcp_start: 10.234.176.16
+      dhcp_ende: 10.234.183.250
+      server_id: 3
+   "rhw":
+      dhcp_start: 10.234.144.16
+      dhcp_ende: 10.234.151.250
+      server_id: 3
+   "wrz":
+      dhcp_start: 10.234.192.16
+      dhcp_ende: 10.234.195.250
+      server_id: 3
+   "fsl":
+      dhcp_start: 10.234.64.16
+      dhcp_ende: 10.234.67.250
+      server_id: 3
+   "zzz":
+      dhcp_start: 110.255.128.16
+      dhcp_ende: 10.255.135.250
       server_id: 3
 
 use_wlan_slovenija_tunneldigger: true
@@ -36,7 +47,7 @@ tunneldigger:
   instance_per_domain: true
   interface: "eth0"
   max_tunnels: 1024
-  port_base: 20100
+  port_base: 10000
   pmtu_discovery: false
   tunnel_timeout: 60
 

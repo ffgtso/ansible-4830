@@ -4,9 +4,40 @@ router id {{ vm_id }};
 
 table ffnet;
 
+filter freifunk {
+{% if ffrl_tun is defined %}
+    # FFRL
+	if net ~ [185.66.192.0/22+] then accept;
+{% endif %}
+{% if ffnw_tun is defined %}
+    # FFNW
+	if net ~ [185.197.132.0/24+] then accept;
+{% endif %}
+{% if ffgt_tun is defined %}
+    # FFGT
+	if net ~ [192.251.226.0/24+] then accept;
+	if net ~ [192.26.120.0/24+] then accept;
+{% endif %}
+	if net ~ [10.0.0.0/8+] then accept;
+{% if not ffrl_tun is defined and not ffnw_tun is defined and not ffgt_tun is defined and not natip_via_ospf is defined %}
+	if net ~ [0.0.0.0/0] then accept;
+{% endif %}
+	if net ~ [192.168.0.0/16+] then accept;
+	reject;
+}
+
+protocol kernel 'kernel_master' {
+    scan time 20;
+    table master;
+    kernel table 254;
+    import all;
+    export all;
+	persist;
+};
+
 protocol kernel 'kernel_ffnet' {
-        scan time 20;
-        import all;
+    scan time 20;
+    import all;
 	export filter {
 		if net ~ 10.43.48.0/21 then accept;
 {% if domaenenliste is defined %}
@@ -16,9 +47,9 @@ protocol kernel 'kernel_ffnet' {
 {% endif %}
 		accept;
 	};
-        table ffnet;
-        kernel table 42;
-        device routes;
+    table ffnet;
+    kernel table 42;
+    device routes;
 	persist;
 };
 
@@ -42,7 +73,7 @@ protocol direct {
 protocol bfd {
     interface "gre*";
     interface "bck-*";
-        multihop {
+    multihop {
   		passive;
     };
 };
@@ -65,29 +96,28 @@ protocol static dhcp_Bereich {
 }
 {% endif %}
 
-filter freifunk {
-{% if ffrl_tun is defined %}
-    # FFRL
-	if net ~ [185.66.192.0/22+] then accept;
-{% endif %}
-{% if ffnw_tun is defined %}
-    # FFNW
-	if net ~ [185.197.132.0/24+] then accept;
-{% endif %}
-{% if ffgt_tun is defined %}
-    # FFGT
-	if net ~ [192.251.226.0/24+] then accept;
-	if net ~ [192.26.120.0/24+] then accept;
-{% endif %}
+{% if natip_via_ospf is defined %}
+protocol ospf {
+	table ffnet;
+	import filter freifunk;
+	export filter {
+		if (source = RTS_BGP) then reject;
+		if net ~ [192.168.0.0/16+] then reject;
+		accept;
+	};
+	instance id {{ospf_nat_instanceid}};
 
-	if net ~ [10.0.0.0/8+] then accept;
-{% if not ffrl_tun is defined and not ffnw_tun is defined and not ffgt_tun is defined %}
-	if net ~ [0.0.0.0/0] then accept;
-{% endif %}
-	if net ~ [192.168.0.0/16+] then accept;
-	reject;
+	area {{ospf_nat_area}} {
+		interface "{{ospf_nat_interface}}" {
+            cost 10;
+            check link;
+		};
+		interface "lo" {
+			stub;
+		};
+	};
 };
-
+{% endif %}
 
 protocol ospf {
 	table ffnet;
@@ -114,19 +144,10 @@ protocol ospf {
 	};
 };
 
-protocol kernel 'kernel_master' {
-        scan time 20;
-        table master;
-        kernel table 254;
-        import all;
-        export all;
-	persist;
-};
-
 protocol static {
-        table master;
-        import all;
-        export none;
+    table master;
+    import all;
+    export none;
 };
 
 filter hostroute {
@@ -142,11 +163,11 @@ filter hostroute {
 	reject;
 };
 
-{% if ffrl_tun is defined or ffnw_tun is defined or ffgt_tun is defined %}
 function is_default() {
 	return (net ~ [0.0.0.0/0]);
 };
 
+{% if ffrl_tun is defined or ffnw_tun is defined or ffgt_tun is defined %}
 template bgp uplink {
 	table ffnet;
 	local as {{ff_network.as_number}};

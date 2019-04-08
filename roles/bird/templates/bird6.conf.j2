@@ -6,13 +6,22 @@ table ffnet;
 
 filter freifunk {
 	if net ~ {{ff_network.v6_network}} then accept;
-{% if not ffrl_tun is defined and not ffgt_tun is defined %}
+{% if not ffrl_tun is defined and not ffgt_tun is defined and not natip_via_ospf is defined %}
 	if net ~ [::/0] then accept;
 {% endif %}
 	reject;
 }
 
-protocol kernel {
+protocol kernel 'kernel_master' {
+	scan time 20;
+	table master;
+	kernel table 254;
+	import all;
+	export all;
+	persist;
+};
+
+protocol kernel 'kernel_ffnet' {
 	scan time 20;
 	import all;
 	export all;
@@ -39,6 +48,19 @@ protocol radv {
 };
 {% endif %}
 
+protocol direct {
+	interface "lo";
+{% if ffrl_tun is defined %}
+	interface "tun-ffrl*";
+{% endif %}
+{% if ffgt_tun is defined %}
+	interface "tun-ffgt*";
+{% endif %}
+	interface "gre-*";
+	interface "bck-*";
+	interface "bat*";
+	table ffnet;
+}
 
 protocol bfd {
 	table ffnet;
@@ -52,6 +74,28 @@ protocol bfd {
 protocol device {
 	scan time 10;
 };
+
+{% if natip_via_ospf is defined %}
+protocol ospf {
+	table ffnet;
+	import filter freifunk;
+	export filter {
+		if (source = RTS_BGP) then reject;
+		accept;
+	};
+	instance id {{ospf_nat_instanceid}};
+
+	area {{ospf_nat_area}} {
+		interface "{{ospf_nat_interface}}" {
+            cost 10;
+            check link;
+		};
+		interface "lo" {
+			stub;
+		};
+	};
+};
+{% endif %}
 
 protocol ospf {
 	table ffnet;
@@ -69,12 +113,16 @@ protocol ospf {
 {% endif %}
 {% endfor %}
 		interface "bck-*";
-{% if ffrl_tun is defined or ffgt_tun is defined %}
 		interface "lo" {
 			stub;
 		};
-{% endif %}
 	};
+};
+
+protocol static {
+	table master;
+	import all;
+	export none;
 };
 
 function is_default() {
@@ -86,56 +134,15 @@ filter export_to_upstream_filter {
 	if source = RTS_STATIC then accept;
 	reject;
 };
-{% endif %}
 
-protocol static static_Gesamtnetzwerk {
+template bgp uplink {
 	table ffnet;
-	route {{ff_network.v6_network}} reject;
-};
-
-{% if domaenenliste is defined %}
-{% for domaene in domaenenliste|dictsort %}
-protocol static static_domaene{{domaene[0]}} {
-	table ffnet;
-	route {{domaenen[domaene[0]].ffv6_network | regex_replace('..::/\d+$','00::/56')}} reject;
-};
-{% endfor %}
-{% endif %}
-{% if dhcp is defined %}
-protocol static 'static_{{inventory_hostname_short}}' {
-	table ffnet;
-	route {{ff_network.v6_network | regex_replace('..::/\d+$','00::/56')}} reject;
-};
-{% endif %}
-
-protocol kernel 'kernel_master' {
-	scan time 20;
-	table master;
-	kernel table 254;
-	import all;
-	export all;
-	persist;
-};
-
-protocol static {
-	table master;
-	import all;
-	export none;
-};
-
-protocol direct {
-	interface "lo";
-{% if ffrl_tun is defined %}
-	interface "tun-ffrl*";
-{% endif %}
-{% if ffgt_tun is defined %}
-	interface "tun-ffgt*";
-{% endif %}
-	interface "gre-*";
-	interface "bck-*";
-	interface "bat*";
-	table ffnet;
+	local as {{ff_network.as_number}};
+	import where is_default();
+	export filter export_to_upstream_filter;
+	gateway recursive;
 }
+{% endif %}
 
 template bgp internal {
 	table ffnet;
@@ -159,33 +166,25 @@ template bgp internal {
 	next hop self;
 };
 
-{% for host in groups['gateways']+groups['domaene-06'] %}
-{% if hostvars[host].vm_id != vm_id %}
-protocol bgp ibgp_{{host|regex_replace('-','_')}} from internal {
-{% if hostvars[host].vm_id < vm_id %}
-    # FIXME! 2a03:2260:115:ffa1:: belongs to DE-FREIFUNKMS-20150128 ...
-	neighbor 2a03:2260:115:ffa1::{{hostvars[host].vm_id}}:{{vm_id}}:1 as {{ff_network.as_number}};
-{% else %}
-	neighbor 2a03:2260:115:ffa1::{{vm_id}}:{{hostvars[host].vm_id}}:0 as {{ff_network.as_number}};
-{% endif %}
-{% if hostvars[host].hoster|default('unknown') != hoster|default('unknown') %}
-	import filter {
-		preference = 50;
-		accept;
-	};
-{% endif %}
-}
-
-{% endif %}
-{% endfor %}
-
-template bgp uplink {
+protocol static static_Gesamtnetzwerk {
 	table ffnet;
-	local as {{ff_network.as_number}};
-	import where is_default();
-	export filter export_to_upstream_filter;
-	gateway recursive;
-}
+	route {{ff_network.v6_network}} reject;
+};
+
+{% if domaenenliste is defined %}
+{% for domaene in domaenenliste|dictsort %}
+protocol static static_domaene{{domaene[0]}} {
+	table ffnet;
+	route {{domaenen[domaene[0]].ffv6_network | regex_replace('..::/\d+$','00::/56')}} reject;
+};
+{% endfor %}
+{% endif %}
+{% if dhcp is defined %}
+protocol static 'static_{{inventory_hostname_short}}' {
+	table ffnet;
+	route {{ff_network.v6_network | regex_replace('..::/\d+$','00::/56')}} reject;
+};
+{% endif %}
 
 {% if ffrl_tun is defined %}
 {% for tun in ffrl_tun %}
@@ -224,3 +223,23 @@ protocol bgp ffnw_{{tun.name}} from uplink {
 
 {% endfor %}
 {% endif %}
+
+{% for host in groups['gateways']+groups['domaene-06'] %}
+{% if hostvars[host].vm_id != vm_id %}
+protocol bgp ibgp_{{host|regex_replace('-','_')}} from internal {
+{% if hostvars[host].vm_id < vm_id %}
+    # FIXME! 2a03:2260:115:ffa1:: belongs to DE-FREIFUNKMS-20150128 ...
+	neighbor 2a03:2260:115:ffa1::{{hostvars[host].vm_id}}:{{vm_id}}:1 as {{ff_network.as_number}};
+{% else %}
+	neighbor 2a03:2260:115:ffa1::{{vm_id}}:{{hostvars[host].vm_id}}:0 as {{ff_network.as_number}};
+{% endif %}
+{% if hostvars[host].hoster|default('unknown') != hoster|default('unknown') %}
+	import filter {
+		preference = 50;
+		accept;
+	};
+{% endif %}
+}
+
+{% endif %}
+{% endfor %}
