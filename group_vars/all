@@ -132,7 +132,7 @@ logrotate:
 
 freifunk:
   name: "Freifunk Kreis GT"
-  kurzname: "4830.org"
+  kurzname: 4830
   search_domain: "ffgt"
   email: info@freifunk-kreisgt.de
   domain: 4830.org
