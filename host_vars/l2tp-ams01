@@ -4,7 +4,7 @@ server_id: 3
 server_besitzer: "Freifunk Kreis GT"
 hoster: "4830.org"
 
-ffgt_nat_ip: 192.251.226.211/32
+ffgt_nat_ip: 192.251.226.215/32
 
 natip_via_ospf: true
 ospf_nat_instanceid: 10
@@ -13,39 +13,39 @@ ospf_nat_interface: ens3
 
 domaenenliste:
    "gut":
-      dhcp_start: 10.234.128.16
-      dhcp_ende: 10.234.136.250
+      dhcp_start: 10.234.137.16
+      dhcp_ende: 10.234.143.250
       server_id: 3
    "gto":
-      dhcp_start: 10.234.160.16
-      dhcp_ende: 10.234.167.250
+      dhcp_start: 10.234.168.16
+      dhcp_ende: 10.234.175.250
       server_id: 3
    "gt8":
-      dhcp_start: 10.234.176.16
-      dhcp_ende: 10.234.183.250
+      dhcp_start: 10.234.184.16
+      dhcp_ende: 10.234.191.250
       server_id: 3
    "rhw":
-      dhcp_start: 10.234.144.16
-      dhcp_ende: 10.234.151.250
+      dhcp_start: 10.234.152.16
+      dhcp_ende: 10.234.159.250
       server_id: 3
    "wrz":
-      dhcp_start: 10.234.192.16
-      dhcp_ende: 10.234.195.250
+      dhcp_start: 10.234.196.16
+      dhcp_ende: 10.234.199.250
       server_id: 3
    "fsl":
-      dhcp_start: 10.234.64.16
-      dhcp_ende: 10.234.67.250
+      dhcp_start: 10.234.68.16
+      dhcp_ende: 10.234.71.250
       server_id: 3
    "zzz":
-      dhcp_start: 110.255.128.16
-      dhcp_ende: 10.255.135.250
+      dhcp_start: 10.255.136.16
+      dhcp_ende: 10.255.143.250
       server_id: 3
 
 use_wlan_slovenija_tunneldigger: true
 
 tunneldigger:
   instance_per_domain: true
-  interface: "eth0"
+  interface: "ens3"
   max_tunnels: 1024
   port_base: 10000
   pmtu_discovery: false
