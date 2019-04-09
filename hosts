@@ -12,11 +12,12 @@ helfer              ipv4=193.26.120.250     ansible_ssh_host="{{ipv4}}"      ans
 
 # Server für Statistiken mittels Graphite und Grafana
 [statistics]
-graphite            ipv4=193.26.120.231     ansible_ssh_host="{{ipv4}}"      ansible_ssh_port=22
+graphite            ipv4=193.26.120.252     ansible_ssh_host="{{ipv4}}"      ansible_ssh_port=22
 
 # Multidomänen-L2TP Gateways mit oder ohne Direktanbindung FFRL
 # 'capacity' im Kommentar gibt die erwünschte relative Auslastung mit Traffic und L2TP-Verbindungen an
 # 'server' im Kommentar muss angegeben werden, wenn mehrere L2TP-VM auf einem Blech laufen. Der Wert kann frei gewählt werden.
 [gateways]
-l2tp-ham01          ipv4=193.26.120.121     ansible_ssh_host="{{ipv4}}"	ansible_ssh_port=22	ansible_ssh_user=root
-l2tp-ams01    		ipv4=94.142.245.105     ansible_ssh_host="{{ipv4}}"	ansible_ssh_port=22	ansible_ssh_user=root
+l2tp-ham01          ipv4=193.26.120.125     ansible_ssh_host="{{ipv4}}"	ansible_ssh_port=22	ansible_ssh_user=root
+l2tp-ams01    		ipv4=193.26.120.67      ansible_ssh_host="{{ipv4}}"	ansible_ssh_port=22	ansible_ssh_user=root
+l2tp-ber01    		ipv4=193.26.120.99      ansible_ssh_host="{{ipv4}}"	ansible_ssh_port=22	ansible_ssh_user=root

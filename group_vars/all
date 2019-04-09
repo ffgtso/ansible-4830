@@ -118,7 +118,7 @@ collectd:
   collect_bind: false
   collect_ping: false
   graphite_target:
-    host: 193.26.120.231
+    host: 193.26.120.252
     port: 2003
 
 bind:
@@ -143,7 +143,7 @@ bind_zonemaster:
 
 graphite:
   graphite_target:
-    host: 193.26.120.231
+    host: 193.26.120.252
     port: 2003
   nginx:
     host_name: "graphite.{{freifunk.domain}}"

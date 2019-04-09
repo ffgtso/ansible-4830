@@ -13,33 +13,33 @@ ospf_nat_interface: ens3
 
 domaenenliste:
    "01":
-      dhcp_start: 10.234.128.16
-      dhcp_ende: 10.234.136.250
-      server_id: 3
+      dhcp_start: 10.234.137.16
+      dhcp_ende: 10.234.143.250
+      server_id: 2
    "02":
-      dhcp_start: 10.234.160.16
-      dhcp_ende: 10.234.167.250
-      server_id: 3
+      dhcp_start: 10.234.168.16
+      dhcp_ende: 10.234.175.250
+      server_id: 2
    "03":
-      dhcp_start: 10.234.176.16
-      dhcp_ende: 10.234.183.250
-      server_id: 3
+      dhcp_start: 10.234.184.16
+      dhcp_ende: 10.234.191.250
+      server_id: 2
    "04":
-      dhcp_start: 10.234.144.16
-      dhcp_ende: 10.234.151.250
-      server_id: 3
+      dhcp_start: 10.234.152.16
+      dhcp_ende: 10.234.159.250
+      server_id: 2
    "05":
-      dhcp_start: 10.234.192.16
-      dhcp_ende: 10.234.195.250
-      server_id: 3
+      dhcp_start: 10.234.196.16
+      dhcp_ende: 10.234.199.250
+      server_id: 2
    "06":
-      dhcp_start: 10.234.64.16
-      dhcp_ende: 10.234.67.250
-      server_id: 3
+      dhcp_start: 10.234.68.16
+      dhcp_ende: 10.234.71.250
+      server_id: 2
    "00":
       dhcp_start: 10.255.128.16
       dhcp_ende: 10.255.135.250
-      server_id: 3
+      server_id: 2
 
 use_wlan_slovenija_tunneldigger: true
 
