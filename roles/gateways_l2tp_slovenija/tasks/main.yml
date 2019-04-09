@@ -25,10 +25,11 @@
   register: _td_domain_instances
   when: domaenenliste is defined
 
-- name: Stop and disable obsolete td instances
-  service: name="tunneldigger@{{item}}.service" enabled=no state=stopped
-  with_items: "{{_td_domain_instances.stdout_lines}}"
-  when: domaenenliste is defined and item not in domaenenliste and _td_per_domain_installed.stat.exists == True
+# Not working, -wusel, 20190409: {"msg": "The conditional check 'domaenenliste is defined and item not in domaenenliste and _td_per_domain_installed.stat.exists == True' failed. The error was: error while evaluating conditional (domaenenliste is defined and item not in domaenenliste and _td_per_domain_installed.stat.exists == True): 'dict object' has no attribute 'stat'\n\nThe error appears to have been in '/root/ansible-4830/roles/gateways_l2tp_slovenija/tasks/main.yml': line 28, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n- name: Stop and disable obsolete td instances\n  ^ here\n"}
+#- name: Stop and disable obsolete td instances
+#  service: name="tunneldigger@{{item}}.service" enabled=no state=stopped
+#  with_items: "{{_td_domain_instances.stdout_lines}}"
+#  when: domaenenliste is defined and item not in domaenenliste and _td_per_domain_installed.stat.exists == True
 
 - name: Clone tunneldigger 
   git:
