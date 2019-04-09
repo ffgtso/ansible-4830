@@ -4,6 +4,10 @@ router id {{ vm_id }};
 
 table ffnet;
 
+function is_default() {
+	return (net ~ [0.0.0.0/0]);
+};
+
 filter freifunk {
 {% if ffrl_tun is defined %}
     # FFRL
@@ -24,7 +28,20 @@ filter freifunk {
 {% endif %}
 	if net ~ [192.168.0.0/16+] then accept;
 	reject;
-}
+};
+
+filter hostroute {
+{% if ffrl_nat_ip is defined %}
+	if net ~ {{ffrl_nat_ip | ipaddr('address')}}/32 then accept;
+{% endif %}
+{% if ffnw_nat_ip is defined %}
+	if net ~ {{ffnw_nat_ip | ipaddr('address')}}/32 then accept;
+{% endif %}
+{% if ffgt_nat_ip is defined %}
+	if net ~ {{ffgt_nat_ip | ipaddr('address')}}/32 then accept;
+{% endif %}
+	reject;
+};
 
 protocol kernel 'kernel_master' {
     scan time 20;
@@ -82,6 +99,12 @@ protocol device {
     scan time 10;
 };
 
+protocol static {
+    table master;
+    import all;
+    export none;
+};
+
 {% if domaenenliste is defined %}
 protocol static dhcp_Bereich {
 	table ffnet;
@@ -99,14 +122,9 @@ protocol static dhcp_Bereich {
 {% if natip_via_ospf is defined %}
 protocol ospf upstream {
 	table ffnet;
-	import filter freifunk;
-	export filter {
-		if (source = RTS_BGP) then reject;
-{% if ffgt_nat_ip is defined %}
-        if net ~ {{ffgt_nat_ip | ipaddr('address')}}/32 then accept;
-{% endif %}
-		reject;
-	};
+	import where is_default();
+	export filter hostroute;
+
 	instance id {{ospf_nat_instanceid}};
 
 	area {{ospf_nat_area}} {
@@ -149,28 +167,6 @@ protocol ospf backbone {
 	};
 };
 
-protocol static {
-    table master;
-    import all;
-    export none;
-};
-
-filter hostroute {
-{% if ffrl_nat_ip is defined %}
-	if net ~ {{ffrl_nat_ip | ipaddr('address')}}/32 then accept;
-{% endif %}
-{% if ffnw_nat_ip is defined %}
-	if net ~ {{ffnw_nat_ip | ipaddr('address')}}/32 then accept;
-{% endif %}
-{% if ffgt_nat_ip is defined %}
-	if net ~ {{ffgt_nat_ip | ipaddr('address')}}/32 then accept;
-{% endif %}
-	reject;
-};
-
-function is_default() {
-	return (net ~ [0.0.0.0/0]);
-};
 
 {% if ffrl_tun is defined or ffnw_tun is defined or ffgt_tun is defined %}
 template bgp uplink {

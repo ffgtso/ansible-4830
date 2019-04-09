@@ -4,6 +4,10 @@ router id {{ vm_id }};
 
 table ffnet;
 
+function is_default() {
+	return (net ~ [::/0]);
+};
+
 filter freifunk {
 	if net ~ {{ff_network.v6_network}} then accept;
 {% if not ffrl_tun is defined and not ffgt_tun is defined and not natip_via_ospf is defined %}
@@ -11,6 +15,13 @@ filter freifunk {
 {% endif %}
 	reject;
 }
+
+{% if ffrl_tun is defined or ffgt_tun is defined or natip_via_ospf is defined %}
+filter export_to_upstream_filter {
+	if source = RTS_STATIC then accept;
+	reject;
+};
+{% endif %}
 
 protocol kernel 'kernel_master' {
 	scan time 20;
@@ -75,14 +86,18 @@ protocol device {
 	scan time 10;
 };
 
+protocol static {
+	table master;
+	import all;
+	export none;
+};
+
 {% if natip_via_ospf is defined %}
 protocol ospf upstream {
 	table ffnet;
-	import filter freifunk;
-	export filter {
-		if (source = RTS_BGP) then reject;
-		accept;
-	};
+	import where is_default();
+	export filter export_to_upstream_filter;
+
 	instance id {{ospf_nat_instanceid}};
 
 	area {{ospf_nat_area}} {
@@ -122,22 +137,7 @@ protocol ospf backbone {
 	};
 };
 
-protocol static {
-	table master;
-	import all;
-	export none;
-};
-
-function is_default() {
-	return (net ~ [::/0]);
-};
-
 {% if ffrl_tun is defined or ffgt_tun is defined %}
-filter export_to_upstream_filter {
-	if source = RTS_STATIC then accept;
-	reject;
-};
-
 template bgp uplink {
 	table ffnet;
 	local as {{ff_network.as_number}};
