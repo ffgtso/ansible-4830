@@ -76,7 +76,7 @@ protocol device {
 };
 
 {% if natip_via_ospf is defined %}
-protocol ospf {
+protocol ospf upstream {
 	table ffnet;
 	import filter freifunk;
 	export filter {
@@ -97,7 +97,7 @@ protocol ospf {
 };
 {% endif %}
 
-protocol ospf {
+protocol ospf backbone {
 	table ffnet;
 	import filter freifunk;
 	export all;
