@@ -122,7 +122,7 @@ protocol static dhcp_Bereich {
 {% if natip_via_ospf is defined %}
 protocol ospf upstream {
 	table ffnet;
-	import filter where is_default();
+	import where is_default();
 	export filter hostroute;
 
 	instance id {{ospf_nat_instanceid}};
