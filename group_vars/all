@@ -2,7 +2,7 @@
 build_tunnels_over_ipv6_if_available: false
 
 domaenen:
-  "gut":
+  "01":
     name: Freifunk KreisGT (Stadt GT)
     community: Freifunk KreisGT
     ffv4_network: 10.234.128.0/20
@@ -12,7 +12,7 @@ domaenen:
     map_max_age: 14
     map_blinking_hours: 8
     firmware: unified/
-  "gto":
+  "02":
     name: Freifunk KreisGT (Südkreis)
     community: Freifunk KreisGT
     ffv4_network: 10.234.160.0/20
@@ -22,7 +22,7 @@ domaenen:
     map_max_age: 14
     map_blinking_hours: 8
     firmware: unified/
-  "gt8":
+  "03":
     name: Freifunk KreisGT (Nordkreis)
     community: Freifunk KreisGT
     ffv4_network: 10.234.176.0/20
@@ -32,7 +32,7 @@ domaenen:
     map_max_age: 14
     map_blinking_hours: 8
     firmware: unified/
-  "rhw":
+  "04":
     name: Freifunk KreisGT (Rheda-Wiedenbrück)
     community: Freifunk KreisGT
     ffv4_network: 10.234.144.0/20
@@ -42,7 +42,7 @@ domaenen:
     map_max_age: 14
     map_blinking_hours: 8
     firmware: unified/
-  "wrz":
+  "05":
     name: Freifunk Müritz
     community: Freifunk Müritz
     ffv4_network: 10.234.192.0/21
@@ -52,7 +52,7 @@ domaenen:
     map_max_age: 14
     map_blinking_hours: 8
     firmware: unified/
-  "fsl":
+  "06":
     name: Freifunk Feldberger Seenplatte
     community: Freifunk Feldberg
     ffv4_network: 10.234.64.0/21
@@ -62,7 +62,7 @@ domaenen:
     map_max_age: 14
     map_blinking_hours: 8
     firmware: unified/
-  "zzz":
+  "00":
     name: Freifunk by 4830.org
     community: Freifunk by 4830.org
     ffv4_network: 10.255.128.0/20
