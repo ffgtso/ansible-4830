@@ -4,7 +4,7 @@
 {% for domaene in domaenen|dictsort %}
 
 {% set group = "gateways" -%}
-{% if domaene[0] == "00" -%}
+{% if domaene[0] == "0000" -%}
 {% set group = "domaene-test" -%}
 {% endif -%}
 {% if "domaene-"+domaene[0] in groups -%}
