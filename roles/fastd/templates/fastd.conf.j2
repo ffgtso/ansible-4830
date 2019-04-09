@@ -1,10 +1,10 @@
 # This file is managed by ansible, don't make changes here - they will be overwritten.
 # Bind to a fixed address and port, IPv4 and IPv6
-bind {{ansible_ens3.ipv4.address}}:{{fastd.port}} interface "eth0";
+bind {{ansible_ens3.ipv4.address}}:{{fastd.port}} interface "ens3";
 
 {% for v6 in ansible_ens3.ipv6 %}
 {% if v6.scope == 'global' %}
-bind [{{v6.address}}]:{{fastd.port}} interface "eth0";
+bind [{{v6.address}}]:{{fastd.port}} interface "ens3";
 {% endif %}
 {% endfor %}
 
