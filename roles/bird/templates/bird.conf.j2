@@ -102,8 +102,10 @@ protocol ospf upstream {
 	import filter freifunk;
 	export filter {
 		if (source = RTS_BGP) then reject;
-		if net ~ [192.168.0.0/16+] then reject;
-		accept;
+{% if ffgt_nat_ip is defined %}
+        if net ~ {{ffgt_nat_ip | ipaddr('address')}}/32 then accept;
+{% endif %}
+		reject;
 	};
 	instance id {{ospf_nat_instanceid}};
 
