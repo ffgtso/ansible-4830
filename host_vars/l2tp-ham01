@@ -47,8 +47,7 @@ tunneldigger:
   instance_per_domain: true
   interface: "ens3"
   max_tunnels: 1024
-  port_base: 10000
+  port_base: 20000
+  control_port: 10000
   pmtu_discovery: false
   tunnel_timeout: 60
-
-

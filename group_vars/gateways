@@ -54,8 +54,11 @@ tunneldigger:
   instance_per_domain: true
   interface: "ens3"
   max_tunnels: 1024
-  port_base: 10000
+  # td-internal port base
+  port_base: 20000
+  # td control-port (external rendevous port), + domain number
+  control_port: 10000
   pmtu_discovery: false
   tunnel_timeout: 60
 
-batman_version: "2017.4"
+#batman_version: "2017.4"
