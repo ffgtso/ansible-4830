@@ -107,4 +107,4 @@ collectd:
     host: 193.26.120.252
     port: 2003
 
-batman_version: "2017.4"
+#batman_version: "2017.4"
