@@ -5,6 +5,7 @@ domaenen:
   "01":
     name: Freifunk KreisGT (Stadt GT)
     community: Freifunk KreisGT
+    site_code: "gut"
     ffv4_network: 10.234.128.0/20
     ffv6_network: 2001:bf7:1310:128::/64
     map_scale: 1.1
@@ -15,6 +16,7 @@ domaenen:
   "02":
     name: Freifunk KreisGT (Südkreis)
     community: Freifunk KreisGT
+    site_code: "gto"
     ffv4_network: 10.234.160.0/20
     ffv6_network: 2001:bf7:1310:160::/64
     map_scale: 1.1
@@ -25,6 +27,7 @@ domaenen:
   "03":
     name: Freifunk KreisGT (Nordkreis)
     community: Freifunk KreisGT
+    site_code: "gt8"
     ffv4_network: 10.234.176.0/20
     ffv6_network: 2001:bf7:1310:176::/64
     map_scale: 1.1
@@ -35,6 +38,7 @@ domaenen:
   "04":
     name: Freifunk KreisGT (Rheda-Wiedenbrück)
     community: Freifunk KreisGT
+    site_code: "rhw"
     ffv4_network: 10.234.144.0/20
     ffv6_network: 2001:bf7:1310:144::/64
     map_scale: 1.1
@@ -45,6 +49,7 @@ domaenen:
   "05":
     name: Freifunk Müritz
     community: Freifunk Müritz
+    site_code: "wrz"
     ffv4_network: 10.234.192.0/21
     ffv6_network: 2001:bf7:170:192::/64
     map_scale: 1.1
@@ -55,6 +60,7 @@ domaenen:
   "06":
     name: Freifunk Feldberger Seenplatte
     community: Freifunk Feldberg
+    site_code: "fsl"
     ffv4_network: 10.234.64.0/21
     ffv6_network: 2001:bf7:170:64::/64
     map_scale: 1.1
@@ -65,6 +71,7 @@ domaenen:
   "00":
     name: Freifunk by 4830.org
     community: Freifunk by 4830.org
+    site_code: "zzz"
     ffv4_network: 10.255.128.0/20
     ffv6_network: 2001:bf7:1310:666::/64
     map_scale: 1.1
