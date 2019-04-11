@@ -12,7 +12,7 @@ ifname = "bat{{item[0]}}"
 
 [webserver]
 enable  = {{ yanic_webserver | ternary('true','false') }}
-bind    = "127.0.0.1:{{8080 + item[0]}}"
+bind    = "127.0.0.1:{{item[0] | int + 8080 }}"
 webroot = "{{ yanic_webserver_webroot }}{{item[0]}}"
 
 [nodes]
