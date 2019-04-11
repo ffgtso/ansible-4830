@@ -16,6 +16,7 @@
     - { role: gateways_gre_upstream, tags: "gateways_gre_upstream"}
     - { role: backbone_gre_ffms, tags: "backbone_gre_ffms"}
     - { role: batman_build, tags: "batman_build", when:  "'batman_version' in hostvars[inventory_hostname] and domaenenliste is defined"}
+    - { role: batctl_dist, tags: "batctl_dist", when:  "'batman_version' not in hostvars[inventory_hostname]"}
     - { role: gateways_batman, tags: "gateways_batman"}
     - { role: gateways_gretap, tags: "gateways_gretap"}
     - { role: gateways_l2tp, tags: "gateways_l2tp", when:  "'use_wlan_slovenija_tunneldigger' not in hostvars[inventory_hostname] or use_wlan_slovenija_tunneldigger == false"}
