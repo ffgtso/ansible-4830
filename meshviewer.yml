@@ -1,6 +1,6 @@
 # Playbook zur Konfiguration aller Servern von services
 
-- hosts: mapserver
+- hosts: meshviewer
   remote_user: root
   roles:
     - { role: hostname, tags: "hostname"}
