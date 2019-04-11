@@ -5,7 +5,7 @@ collect_interval = "{{ yanic_respondd_collect_interval }}"
 synchronize      = "{{ yanic_respondd_synchronize_interval }}"
 
 [respondd.sites.{{ freifunk.kurzname }}]
-domains            = ["{{var[item].site_code}}"]
+domains            = ["{{vars[item].site_code}}"]
 
 [[respondd.interfaces]]
 ifname = "bat{{item}}"
@@ -28,7 +28,7 @@ path    = "/var/www/html/meshviewer/data{{item}}/meshviewer.json"
 [nodes.output.meshviewer-ffrgb.filter]
 no_owner = true
 blacklist = []
-sites = ["{{var[item].site_code}}"]
+sites = ["{{vars[item].site_code}}"]
 has_location = true
 
 #[nodes.output.meshviewer-ffrgb.filter.in_area]
