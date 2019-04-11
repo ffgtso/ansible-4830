@@ -5,7 +5,7 @@ collect_interval = "{{ yanic_respondd_collect_interval }}"
 synchronize      = "{{ yanic_respondd_synchronize_interval }}"
 
 [respondd.sites.{{ freifunk.kurzname }}]
-domains            = ["{{item.site_code}}"]
+domains            = ["{{var[item].site_code}}"]
 
 [[respondd.interfaces]]
 ifname = "bat{{item}}"
@@ -28,7 +28,7 @@ path    = "/var/www/html/meshviewer/data{{item}}/meshviewer.json"
 [nodes.output.meshviewer-ffrgb.filter]
 no_owner = true
 blacklist = []
-sites = ["{{item.site_code}}"]
+sites = ["{{var[item].site_code}}"]
 has_location = true
 
 #[nodes.output.meshviewer-ffrgb.filter.in_area]
@@ -67,11 +67,11 @@ delete_interval = "{{ yanic_database_delete_interval }}"
 #% endfor %#
 
 [[database.connection.influxdb]]
-enable   = {{ item.influxdb_enable | ternary('true','false') }}
-address  = "{{ item.influxdb_host }}"
-database = "{{ item.influxdb_database }}"
-username = "{{ item.influxdb_username }}"
-password = "{{ item.influxdb_password }}"
+enable   = {{ vars[item].influxdb_enable | ternary('true','false') }}
+address  = "{{ vars[item].influxdb_host }}"
+database = "{{ vars[item].influxdb_database }}"
+username = "{{ vars[item].influxdb_username }}"
+password = "{{ vars[item].influxdb_password }}"
 
 [database.connection.influxdb.tags]
 
