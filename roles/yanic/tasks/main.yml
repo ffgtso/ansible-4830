@@ -16,11 +16,14 @@
   notify: Restart all yanics
   with_items: domaenen
 
-- name: Create directories
+- name: Create directories 1
   file: path={{ item }}/ state=directory owner=yanic
   with_items:
-  - "{{ yanic_meshviewer_path }}"
   - /var/lib/yanic
+
+- name: Create directories 2
+  file: path=/var/www/html/meshviewer/data{{item[0]}}/ state=directory owner=yanic
+  with_items: domaenen
 
 - name: Install systemd unit
   template: src=yanic.service.j2 dest=/lib/systemd/system/yanic-d{{item[0]}}.service
