@@ -22,11 +22,11 @@
   - /var/lib/yanic
 
 - name: Create directories 2
-  file: path=/var/www/html/meshviewer/data{{item[0]}}/ state=directory owner=yanic
+  file: path=/var/www/html/meshviewer/data{{item}}/ state=directory owner=yanic
   with_items: domaenen
 
 - name: Install systemd unit
-  template: src=yanic.service.j2 dest=/lib/systemd/system/yanic-d{{item[0]}}.service
+  template: src=yanic.service.j2 dest=/lib/systemd/system/yanic-d{{item}}.service
   notify:
   - Reload systemd
   - Restart all yanics
@@ -37,5 +37,5 @@
   notify: Restart all yanics
 
 - name: Enable yanic
-  service: name=yanic-d{{item[0]}} enabled=yes
+  service: name=yanic-d{{item}} enabled=yes
   with_items: domaenen
