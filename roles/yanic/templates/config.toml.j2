@@ -5,30 +5,30 @@ collect_interval = "{{ yanic_respondd_collect_interval }}"
 synchronize      = "{{ yanic_respondd_synchronize_interval }}"
 
 [respondd.sites.{{ freifunk.kurzname }}]
-domains            = ["{{item.site_code}}"]
+domains            = ["{{item.key.site_code}}"]
 
 [[respondd.interfaces]]
-ifname = "bat{{item}}"
+ifname = "bat{{item.key}}"
 
 [webserver]
 enable  = {{ yanic_webserver | ternary('true','false') }}
-bind    = "127.0.0.1:{{item | int + 8080 }}"
-webroot = "{{ yanic_webserver_webroot }}{{item}}"
+bind    = "127.0.0.1:8080 + {{item.key | int}}"
+webroot = "{{ yanic_webserver_webroot }}{{item.key}}"
 
 [nodes]
-state_path     = "/var/lib/yanic/yanic-d{{item}}.json"
+state_path     = "/var/lib/yanic/yanic-d{{item.key}}.json"
 prune_after    = "{{ yanic_nodes_prune_after }}"
 save_interval  = "{{ yanic_nodes_save_interval }}"
 offline_after  = "{{ yanic_nodes_offline_after }}"
 
 [[nodes.output.meshviewer-ffrgb]]
 enable  = {{ yanic_meshviewer_ffrgb_enable | ternary('true','false') }}
-path    = "/var/www/html/meshviewer/data{{item}}/meshviewer.json"
+path    = "/var/www/html/meshviewer/data{{item.key}}/meshviewer.json"
 
 [nodes.output.meshviewer-ffrgb.filter]
 no_owner = true
 blacklist = []
-sites = ["{{vars[item].site_code}}"]
+sites = ["{{item.key.site_code}}"]
 has_location = true
 
 #[nodes.output.meshviewer-ffrgb.filter.in_area]
@@ -40,15 +40,15 @@ has_location = true
 [[nodes.output.meshviewer]]
 enable         = {{ yanic_meshviewer_enable | ternary('true','false') }}
 version        = {{ yanic_meshviewer_version }}
-nodes_path     = "/var/www/html/meshviewer/data{{item}}/nodes.json"
-graph_path     = "/var/www/html/meshviewer/data{{item}}/graph.json"
+nodes_path     = "/var/www/html/meshviewer/{{item.key}}/nodes.json"
+graph_path     = "/var/www/html/meshviewer/{{item.key}}/graph.json"
 
 [nodes.output.meshviewer.filter]
 no_owner = true
 
 [[nodes.output.nodelist]]
 enable   = true
-path = "/var/www/html/meshviewer/data{{item}}/nodelist.json"
+path = "/var/www/html/meshviewer/data{{item.key}}/nodelist.json"
 
 [nodes.output.nodelist.filter]
 no_owner = true
@@ -67,11 +67,11 @@ delete_interval = "{{ yanic_database_delete_interval }}"
 #% endfor %#
 
 [[database.connection.influxdb]]
-enable   = {{ domaenen.item.influxdb_enable | ternary('true','false') }}
-address  = "{{ domaenen.item.influxdb_host }}"
-database = "{{ domaenen.item.influxdb_database }}"
-username = "{{ domaenen.item.influxdb_username }}"
-password = "{{ domaenen.item.influxdb_password }}"
+enable   = {{ item.key.influxdb_enable | ternary('true','false') }}
+address  = "{{ item.key.influxdb_host }}"
+database = "{{ item.key.influxdb_database }}"
+username = "{{ item.key.influxdb_username }}"
+password = "{{ item.key.influxdb_password }}"
 
 [database.connection.influxdb.tags]
 
@@ -90,4 +90,4 @@ address  = "{{ yanic_repondd_remotehost }}"
 
 [[database.connection.logging]]
 enable   = false
-path     = "/var/log/yanic-d{{item}}.log"
+path     = "/var/log/yanic-d{{item.key}}.log"
