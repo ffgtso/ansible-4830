@@ -14,7 +14,9 @@
 - name: Configure yanic
   template: src=config.toml.j2 dest=/etc/yanic-d{{ item.key }}.conf
   notify: Restart all yanics
-  with_dict: "{{domaenen}}"
+  loop: "{{domaenen|flatten(levels=1)}}"
+  loop_control:
+    index_var: index
 
 - name: Create directories 1
   file: path={{ item }}/ state=directory owner=yanic
