@@ -1,4 +1,4 @@
-# DANGER, WILL ROBINSON: this file is managed by ansible.
+# {{ansible_managed}}
 [respondd]
 enable           = {{ yanic_respondd | ternary('true','false') }}
 collect_interval = "{{ yanic_respondd_collect_interval }}"
