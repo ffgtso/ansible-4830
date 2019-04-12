@@ -1,34 +1,34 @@
-# {{ ansible_managed }}
+# DANGER, WILL ROBINSON: this file is managed by ansible.
 [respondd]
 enable           = {{ yanic_respondd | ternary('true','false') }}
 collect_interval = "{{ yanic_respondd_collect_interval }}"
 synchronize      = "{{ yanic_respondd_synchronize_interval }}"
 
 [respondd.sites.{{ freifunk.kurzname }}]
-domains            = ["{{item.key.site_code}}"]
+domains            = ["{{domaenen[item].site_code}}"]
 
 [[respondd.interfaces]]
-ifname = "bat{{item.key}}"
+ifname = "bat{{item}}"
 
 [webserver]
 enable  = {{ yanic_webserver | ternary('true','false') }}
-bind    = "127.0.0.1:8080 + {{item.key | int}}"
-webroot = "{{ yanic_webserver_webroot }}{{item.key}}"
+bind    = "127.0.0.1:{{8080 + item|int}}"
+webroot = "{{ yanic_webserver_webroot }}{{item}}"
 
 [nodes]
-state_path     = "/var/lib/yanic/yanic-d{{item.key}}.json"
+state_path     = "/var/lib/yanic/yanic-{{item}}.json"
 prune_after    = "{{ yanic_nodes_prune_after }}"
 save_interval  = "{{ yanic_nodes_save_interval }}"
 offline_after  = "{{ yanic_nodes_offline_after }}"
 
 [[nodes.output.meshviewer-ffrgb]]
 enable  = {{ yanic_meshviewer_ffrgb_enable | ternary('true','false') }}
-path    = "/var/www/html/meshviewer/data{{item.key}}/meshviewer.json"
+path    = "/var/www/html/meshviewer/data{{item}}/meshviewer.json"
 
 [nodes.output.meshviewer-ffrgb.filter]
 no_owner = true
 blacklist = []
-sites = ["{{item.key.site_code}}"]
+sites = ["{{domaenen[item].site_code}}"]
 has_location = true
 
 #[nodes.output.meshviewer-ffrgb.filter.in_area]
@@ -40,15 +40,15 @@ has_location = true
 [[nodes.output.meshviewer]]
 enable         = {{ yanic_meshviewer_enable | ternary('true','false') }}
 version        = {{ yanic_meshviewer_version }}
-nodes_path     = "/var/www/html/meshviewer/{{item.key}}/nodes.json"
-graph_path     = "/var/www/html/meshviewer/{{item.key}}/graph.json"
+nodes_path     = "/var/www/html/meshviewer/{{item}}/nodes.json"
+graph_path     = "/var/www/html/meshviewer/{{item}}/graph.json"
 
 [nodes.output.meshviewer.filter]
 no_owner = true
 
 [[nodes.output.nodelist]]
 enable   = true
-path = "/var/www/html/meshviewer/data{{item.key}}/nodelist.json"
+path = "/var/www/html/meshviewer/data{{item}}/nodelist.json"
 
 [nodes.output.nodelist.filter]
 no_owner = true
@@ -67,11 +67,11 @@ delete_interval = "{{ yanic_database_delete_interval }}"
 #% endfor %#
 
 [[database.connection.influxdb]]
-enable   = {{ item.value.influxdb_enable | ternary('true','false') }}
-address  = "{{ item.value.influxdb_host }}"
-database = "{{ item.value.influxdb_database }}"
-username = "{{ item.value.influxdb_username }}"
-password = "{{ item.value.influxdb_password }}"
+enable   = {{ domaenen[item].influxdb_enable | ternary('true','false') }}
+address  = "{{ domaenen[item].influxdb_host }}"
+database = "{{ domaenen[item].influxdb_database }}"
+username = "{{ domaenen[item].influxdb_username }}"
+password = "{{ domaenen[item].influxdb_password }}"
 
 [database.connection.influxdb.tags]
 
@@ -82,7 +82,7 @@ address  = "{{ db.address }}"
 prefix   = "{{ db.prefix }}"
 {% endfor %}
 
-# FIXME! This needs to become a domaenen. variale
+# FIXME! This needs to become a variable in "domaenen"
 [[database.connection.respondd]]
 enable   = {{ yanic_repondd_enable | ternary('true','false') }}
 type     = "udp6"
@@ -90,4 +90,4 @@ address  = "{{ yanic_repondd_remotehost }}"
 
 [[database.connection.logging]]
 enable   = false
-path     = "/var/log/yanic-d{{item.key}}.log"
+path     = "/var/log/yanic-{{item}}.log"

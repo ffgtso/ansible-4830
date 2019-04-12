@@ -1,4 +1,16 @@
 ---
+- name: Create HopGlass-server directory if not existent
+  file:
+    path: /opt/hopglass
+    state: directory
+
+- name: Create HopGlass User
+  user:
+    name: hopglass
+    system: yes
+    createhome: yes
+    home: /opt/hopglass
+
 - name: Create HopGlass directory if not existent
   file:
     path: /opt/hopglass/client
@@ -38,12 +50,13 @@
   with_items:
     - "deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main"
     - "deb-src https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main"
+  when: ansible_distribution == "Debian"
 
-- name: Install nodejs
+- name: Install nodejs, npm and yarn
   apt:
-    pkg: nodejs
+    pkg: ['nodejs', 'yarn', 'npm', 'jq']
     state: present
-
+    
 - name: Install dependencies
   shell: npm install
   args:
@@ -112,3 +125,4 @@
   when: item != "None"
   with_items:
     - "{{communities}}"
+

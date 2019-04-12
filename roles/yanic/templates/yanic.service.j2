@@ -1,11 +1,11 @@
 [Unit]
-Description=yanic-d{{item[0]}}
+Description=yanic-{{item}}
 After=network-online.target
 
 [Service]
 Type=simple
 User=yanic
-ExecStart=/opt/go/bin/yanic serve --config /etc/yanic-d{{item[0]}}.conf
+ExecStart=/opt/go/bin/yanic serve --config /etc/yanic-{{item}}.conf
 Restart=always
 RestartSec=5s
 Environment=PATH=/usr/bin:/usr/local/bin
