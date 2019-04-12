@@ -67,11 +67,11 @@ delete_interval = "{{ yanic_database_delete_interval }}"
 #% endfor %#
 
 [[database.connection.influxdb]]
-enable   = {{ value.influxdb_enable | ternary('true','false') }}
-address  = "{{ value.influxdb_host }}"
-database = "{{ value.influxdb_database }}"
-username = "{{ value.influxdb_username }}"
-password = "{{ value.influxdb_password }}"
+enable   = {{ item.value.influxdb_enable | ternary('true','false') }}
+address  = "{{ item.value.influxdb_host }}"
+database = "{{ item.value.influxdb_database }}"
+username = "{{ item.value.influxdb_username }}"
+password = "{{ item.value.influxdb_password }}"
 
 [database.connection.influxdb.tags]
 
