@@ -16,6 +16,7 @@ helfer              ipv4=193.26.120.250     ansible_ssh_host="{{ipv4}}"      ans
 # Server für Statistiken mittels Graphite und Grafana
 [statistics]
 graphite            ipv4=193.26.120.252     ansible_ssh_host="{{ipv4}}"      ansible_ssh_port=22
+influx02            ipv4=193.26.120.248     ansible_ssh_host="{{ipv4}}"      ansible_ssh_port=22
 
 # Multidomänen-L2TP Gateways mit oder ohne Direktanbindung FFRL
 # 'capacity' im Kommentar gibt die erwünschte relative Auslastung mit Traffic und L2TP-Verbindungen an

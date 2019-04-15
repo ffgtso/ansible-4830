@@ -12,3 +12,4 @@
     - { role: statistics_grafana, tags: "statistics_grafana", when: "grafana is defined"}
     - { role: statistics_nginx, tags: "statistics_nginx"}
     - { role: collectd, tags: "collectd", when: "collectd is defined"}
+    - { role: services_influxdb, tags: "statistics_influxdb", when: "influxdb is defined"}
