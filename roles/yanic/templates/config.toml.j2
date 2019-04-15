@@ -13,7 +13,7 @@ ifname = "bat{{item}}"
 [webserver]
 enable  = {{ yanic_webserver | ternary('true','false') }}
 bind    = "127.0.0.1:{{8080 + item|int}}"
-webroot = "{{ yanic_webserver_webroot }}{{item}}"
+webroot = "/var/www/html/meshviewer/data{{item}}"
 
 [nodes]
 state_path     = "/var/lib/yanic/yanic-{{item}}.json"

@@ -11,7 +11,8 @@
     - { role: batman_build, tags: "batman_build", when:  "'batman_version' in hostvars[inventory_hostname]"}
     - { role: batctl_dist, tags: "batctl_dist", when:  "'batman_version' not in hostvars[inventory_hostname]"}
     - { role: mapserver_interfaces, tags: "mapserver_interfaces"}
-    - { role: mapserver_hopglass-server, tags: "mapserver_hopglass-server"}
+    - { role: yanic, tags: "yanic", when: "'use_yanic' in hostvars[inventory_hostname]"}
+    - { role: mapserver_hopglass-server, tags: "mapserver_hopglass-server", when: "'use_yanic' not in hostvars[inventory_hostname]"}
     - { role: mapserver_hopglass, tags: "mapserver_hopglass"}
     - { role: mapserver_nginx, tags: "mapserver_nginx"}
     - { role: collectd, tags: "collectd", when: "'collectd' in hostvars[inventory_hostname]" }
