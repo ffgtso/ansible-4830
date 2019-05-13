@@ -1,6 +1,6 @@
 # Server für Hopglass Karten
 [mapserver]
-karte               ipv4=193.26.120.232     ansible_ssh_host="{{ipv4}}"      ansible_ssh_port=22
+karte               ipv4=192.251.226.142    ansible_ssh_host="{{ipv4}}"      ansible_ssh_port=22
 
 [meshviewer]
 map02               ipv4=193.26.120.114     ansible_ssh_host="{{ipv4}}"      ansible_ssh_port=22
