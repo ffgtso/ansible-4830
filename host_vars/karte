@@ -61,6 +61,17 @@ mapconfig:
         maxZoom: 23
         layers: "nw_dop_rgb"
         format: "image/jpeg"
+    - name: "HERE"
+      url: "https://{s}.base.maps.api.here.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8?app_id=**APP_ID**&app_code=**APP_CODE**&lg=deu"
+      config:
+        attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>'
+        maxZoom: 20
+        subdomains: "1234"
+    - name: "Esri.WorldImagery"
+      url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      config:
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        maxZoom: 20
 
 node_stats:
   graphite_target:
